@@ -6,6 +6,7 @@ namespace classes
     public class BankAccount
     {
         private static int accountNumberSeed = 1234567890;
+        private List<Transaction> allTransactions = new List<Transaction>();
 
         public string Number { get; }
         public string Owner { get; set; }
@@ -22,17 +23,19 @@ namespace classes
                 return balance;
             }
         }
+        private readonly decimal minimumBalance;
 
-        public BankAccount(string name, decimal initialBalance)
+        public BankAccount(string name, decimal initialBalance) : this(name, initialBalance, 0) { }
+        public BankAccount(string name, decimal initialBalance, decimal minimumBalance)
         {           
             this.Number = accountNumberSeed.ToString();
             accountNumberSeed++;
 
             this.Owner = name;
-            MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
+            this.minimumBalance = minimumBalance;
+            if (initialBalance > 0)
+                MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
         }
-
-        private List<Transaction> allTransactions = new List<Transaction>();
 
         public void MakeDeposit(decimal amount, DateTime date, string note)
         {
@@ -51,12 +54,23 @@ namespace classes
             {
                 throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawal must be positive");
             }
-            if (Balance - amount < 0)
+            var overdraftTransaction = CheckWithdrawlLimit(Balance - amount < minimumBalance);
+            var withdrawl = new Transaction(-amount, date, note);
+            allTransactions.Add(withdrawl);
+            if (overdraftTransaction != null)
+                allTransactions.Add(overdraftTransaction);
+        }
+
+        protected virtual Transaction? CheckWithdrawlLimit(bool isOverdrawn)
+        {
+            if (isOverdrawn)
             {
                 throw new InvalidOperationException("Not sufficient funds for this withdrawal");
             }
-            var withdrawal = new Transaction(-amount, date, note);
-            allTransactions.Add(withdrawal);
+            else
+            {
+                return default;
+            }
         }
 
         public string GetAccountHistory()
@@ -73,5 +87,7 @@ namespace classes
 
             return report.ToString();
         }
+
+        public virtual void PerformMonthEndTransactions() { }
     }
 }
