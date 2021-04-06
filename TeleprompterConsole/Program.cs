@@ -7,21 +7,21 @@ namespace TeleprompterConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            RunTeleprompter().Wait();
+            await RunTeleprompter();
         }
 
         private static async Task RunTeleprompter()
         {
             var config = new TelePrompterConfig();
-            var displayTask = ShowTeleprompter(config);
+            var displayTask = ShowTeleprompterAsync(config);
 
-            var speedTask = GetInput(config);
+            var speedTask = GetInputAsync(config);
             await Task.WhenAny(displayTask, speedTask);
         }
 
-        private static async Task ShowTeleprompter(TelePrompterConfig config)
+        private static async Task ShowTeleprompterAsync(TelePrompterConfig config)
         {
             var words = ReadFrom("sampleQuotes.txt");
             foreach (var word in words)
@@ -32,7 +32,7 @@ namespace TeleprompterConsole
                     await Task.Delay(config.DelayInMilliseconds);
                 }
             }
-            config.SetDone();
+            config.Done = true;
         }
 
         static IEnumerable<string> ReadFrom(string file)
@@ -59,9 +59,8 @@ namespace TeleprompterConsole
             }
         }
 
-        private static async Task GetInput(TelePrompterConfig config)
+        private static async Task GetInputAsync(TelePrompterConfig config)
         {
-            var delay = 200;
             Action work = () =>
             {
                 do
@@ -77,7 +76,7 @@ namespace TeleprompterConsole
                     }
                     else if (key.KeyChar == 'X' || key.KeyChar == 'x')
                     {
-                        config.SetDone(); ;
+                        config.Done = true;
                     }
                 } while (!config.Done);
             };

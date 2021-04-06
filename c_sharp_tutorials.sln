@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "classes", "classes\classes.csproj", "{450BF4E0-2C9B-4BFE-89B2-9147CD30D6AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleprompterConsole", "TeleprompterConsole\TeleprompterConsole.csproj", "{C6D2C947-ECF7-493A-AD82-475DFB1E247F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleprompterConsole", "TeleprompterConsole\TeleprompterConsole.csproj", "{C6D2C947-ECF7-493A-AD82-475DFB1E247F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIClient", "WebAPIClient\WebAPIClient.csproj", "{19E37043-391E-4B7E-951C-1524268A38CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C6D2C947-ECF7-493A-AD82-475DFB1E247F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6D2C947-ECF7-493A-AD82-475DFB1E247F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6D2C947-ECF7-493A-AD82-475DFB1E247F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19E37043-391E-4B7E-951C-1524268A38CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E37043-391E-4B7E-951C-1524268A38CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E37043-391E-4B7E-951C-1524268A38CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E37043-391E-4B7E-951C-1524268A38CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

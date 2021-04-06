@@ -13,11 +13,6 @@ namespace TeleprompterConsole
             DelayInMilliseconds = newDelay;
         }
 
-        public bool Done { get; private set; }
-
-        public void SetDone()
-        {
-            Done = true;
-        }
+        public bool Done { get; set; }
     }
 }
